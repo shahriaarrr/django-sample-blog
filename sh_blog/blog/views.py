@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse
+from .forms import *
 # Create your views here.
 def home(request):
     return HttpResponse("<h1>Hello. welcome to shahriar's blog</h1>")
@@ -14,3 +15,12 @@ def love(request, name, number):
         count += 1
 
     return HttpResponse(text)
+
+def signup(request):
+    if request.method == "GET":
+        form = SignUpForm()
+        return render(request, 'signup.html', {'form' : form})
+    elif request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
